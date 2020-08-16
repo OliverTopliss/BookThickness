@@ -1,0 +1,17 @@
+body{
+    background-color: #659dbd;
+}
+
+h1 {
+    color:#ffffff;
+    text-align: center;
+}
+
+p {
+    color: #ffffff;
+    text-align: center;
+}
+
+#book_data{
+    text-align: center;
+}
