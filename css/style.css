@@ -48,3 +48,10 @@ p {
 .button{
     border-radius: 1em;
 }
+
+input{
+    width: 50%;
+    /* margin: auto;
+    height: auto; */
+
+}
