@@ -1,5 +1,6 @@
 body{
-    background-color: #659dbd;
+    background-image: url("../resources/stanislav-kondratiev-6pO3QFkk7hQ-unsplash.jpg");
+    background-size: 100%;
 }
 
 h1 {
@@ -12,6 +13,38 @@ p {
     text-align: center;
 }
 
-#book_data{
-    text-align: center;
+
+
+.container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 25%;
+    padding-bottom: 25%;
+}
+
+.container .col {
+    background: #624a2e;
+    border-radius: 25px;
+    color: #FFFFFF;
+}
+
+.container .col .col-inner-left {
+    background: #624a2e;
+    float: left;
+    width: 50%;
+
+}
+
+.container .col .col-inner-right {
+    background: #624a2e;
+    float: right;
+    width: 50%;
+}
+
+.button{
+    border-radius: 1em;
 }
