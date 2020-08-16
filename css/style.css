@@ -14,7 +14,6 @@ p {
 }
 
 
-
 .container{
     margin-left: auto;
     margin-right: auto;
@@ -54,4 +53,11 @@ input{
     /* margin: auto;
     height: auto; */
 
+}
+#book_data{
+    text-align: center;
+}
+
+form{
+    text-align: center;
 }
