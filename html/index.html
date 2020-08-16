@@ -7,4 +7,22 @@
       <h1>Welcome to BookThickness</h1>
       <p>Here you can see how thick a book will be based on its page count.</p>
       <p>Either enter the number of pages in the book or search for the title.</p>
+      
+      <form id="book_data" action="">
+          Number of pages: <input type="number" id="num_pages_input" name="fnumber">
+          <input type="button" name="fsubmit"  onclick="getNumberOfPages()" value="Submit">
+      </form>
+
+      <p id="thickness_para"> Thickness (Roughly):  </p>
+      <p id="thickness_explained_para">  </p> <!--populated after submitting the form-->
+
+
+      <script>
+          function getNumberOfPages(){
+              var numberOfPages = document.getElementById("num_pages_input").value;
+              document.getElementById("thickness_para").innerHTML = "Thickness (Roughly):" + (numberOfPages * 0.1) + "mm"; //paper thickness = 0.1mm
+              document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
+          }
+      </script>
+
   </body>
