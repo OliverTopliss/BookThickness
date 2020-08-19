@@ -66,7 +66,7 @@
   
         function getNumberOfPages(){
             var numberOfPages = document.getElementById("num_pages_input").value;
-            bookThickness = numberOfPages * 0.1;
+            bookThickness = (numberOfPages * 0.1) / 2;
             document.getElementById("thickness_para").innerHTML = `Thickness (Roughly): ${bookThickness}mm`; //paper thickness = 0.1mm
             document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
 
