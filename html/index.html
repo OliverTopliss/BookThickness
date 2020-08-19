@@ -12,6 +12,7 @@
             <p>Here you can see how thick a book will be based on its page count.</p>
             <p>Either enter the number of pages in the book or search for the title.</p>
             
+            <!-- Split the central container in half -->
             <div class="col-inner-left">
               <form class="page_input" id="book_data" action="">
                 Number of pages: <input type="number" id="num_pages_input" name="fnumber">
@@ -30,16 +31,77 @@
               <p id="thickness_para"> Thickness (Roughly):  </p>
               <p id="thickness_explained_para">  </p> <!--populated after submitting the form-->
             </div>
-
-
-            <script>
-                function getNumberOfPages(){
-                    var numberOfPages = document.getElementById("num_pages_input").value;
-                    document.getElementById("thickness_para").innerHTML = `Thickness (Roughly): ${numberOfPages * 0.1}mm`; //paper thickness = 0.1mm
-                    document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
-                }
-            </script>
           </div>
       </div>
+      
+      <div class="container">
+        <div class="col">
+          <h1>Thickness Visualizer</h1>
 
+          <h2>Calibrate your display</h2>
+          <p>Place a credit card in the template below and adjust the size of the template until the width fits. 
+             This allows us to provide more accurate thickness predictions</p>
+          
+          <!-- Split the central container in half -->
+          <div class="col-inner-left">
+            <img id="resize-card-image" src="../resources/credit-card-template.png" width="54" height="86">
+          </div>
+
+          <div class="col-inner-right">
+            <form class="resize-card-calibrator" id="resize" action="">
+              <input class = "button" type="button" name="fincrease"  onclick="increaseTemplateSize()" value="+">
+              <input class = "button" type="button" name="fdecrease"  onclick="decreaseTemplateSize()" value="-">
+            </form>
+          </div>
+            
+          
+          <div class="visual-thickness">
+            <p>Below is a visual representation of the book dependent on your screen-size</p>
+            <img id="thickness-indicator-image" src="../resources/thickness1x1.png" width="1" height="10">
+          </div>
+        </div>
+    </div>
+
+
+      <script>
+        var bookThickness;
+        var pixelDensity;
+        //credit-card width in mm
+        const creditCardWidth = 53.98;
+
+  
+        function getNumberOfPages(){
+            var numberOfPages = document.getElementById("num_pages_input").value;
+            bookThickness = numberOfPages * 0.1;
+            document.getElementById("thickness_para").innerHTML = `Thickness (Roughly): ${bookThickness}mm`; //paper thickness = 0.1mm
+            document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
+
+            setThicknessIndicator();
+        }
+        
+        //Upadte the size of the thickness indicator
+        function setThicknessIndicator(){
+            document.getElementById("thickness-indicator-image").width = bookThickness * pixelDensity;
+            document.getElementById("thickness_explained_para").innerHTML = "Indicator Updated";
+            console.log(`indicator width: ${document.getElementById("thickness-indicator-image").width}`);
+
+        }
+
+        //Reduce the credit-card temp;ate size
+        function increaseTemplateSize(){
+            document.getElementById("resize-card-image").width += 1
+            calculatePixelDensity();
+        }
+
+        //Reduce the credit-card template size
+        function decreaseTemplateSize(){
+            document.getElementById("resize-card-image").width -= 1
+            calculatePixelDensity();
+        }
+
+        //calculate the pixel density based on the credit card calibration -> pixels per mm
+        function calculatePixelDensity(){
+            pixelDensity = document.getElementById("resize-card-image").width / creditCardWidth;
+        }
+    </script>
   </body>
