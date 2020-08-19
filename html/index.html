@@ -13,21 +13,21 @@
             <p>Either enter the number of pages in the book or search for the title.</p>
             
             <!-- Split the central container in half -->
-            <div class="col-inner-left">
+            <div class="col-inner">
               <form class="page_input" id="book_data" action="">
                 Number of pages: <input type="number" id="num_pages_input" name="fnumber">
                 <input class = "button" type="button" name="fsubmit_page_num"  onclick="getNumberOfPages()" value="Submit">
               </form>
             </div>
 
-            <div class="col-inner-right">
+            <div class="col-inner">
               <form class="book_search" id="get_book" action="">
                 Book Name: <input type="text" id="book_name_input" name="fname">
                 <input class = "button" type="button" name="fsubmit_name"  onclick="" value="Submit">
               </form>
             </div>
 
-            <div class="result">
+            <div class="bottom">
               <p id="thickness_para"> Thickness (Roughly):  </p>
               <p id="thickness_explained_para">  </p> <!--populated after submitting the form-->
             </div>
@@ -41,24 +41,18 @@
           <h2>Calibrate your display</h2>
           <p>Place a credit card in the template below and adjust the size of the template until the width fits. 
              This allows us to provide more accurate thickness predictions</p>
-          
-          <!-- Split the central container in half -->
-          <div class="col-inner-left">
-            <img id="resize-card-image" src="../resources/credit-card-template.png" width="54" height="86">
-          </div>
+        
 
-          <div class="col-inner-right">
+            <img id="resize-card-image" src="../resources/credit-card-template.png" width="54" height="54">
+      
             <form class="resize-card-calibrator" id="resize" action="">
               <input class = "button" type="button" name="fincrease"  onclick="increaseTemplateSize()" value="+">
               <input class = "button" type="button" name="fdecrease"  onclick="decreaseTemplateSize()" value="-">
             </form>
-          </div>
             
-          
-          <div class="visual-thickness">
+  
             <p>Below is a visual representation of the book dependent on your screen-size</p>
             <img id="thickness-indicator-image" src="../resources/thickness1x1.png" width="1" height="10">
-          </div>
         </div>
     </div>
 

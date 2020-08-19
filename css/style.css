@@ -21,8 +21,7 @@ p {
     margin-bottom: auto;
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 25%;
-    padding-bottom: 25%;
+    padding-bottom: 10%;
 }
 
 .container .col {
@@ -31,17 +30,23 @@ p {
     color: #FFFFFF;
 }
 
-.container .col .col-inner-left {
+.container .col .col-inner {
     background: #624a2e;
     float: left;
     width: 50%;
-
 }
 
-.container .col .col-inner-right {
-    background: #624a2e;
-    float: right;
-    width: 50%;
+
+.container .col .bottom .p{
+    text-align: center;
+}
+
+.container .col img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 2%;
+
 }
 
 .button{
