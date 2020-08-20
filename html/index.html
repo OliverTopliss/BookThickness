@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/style.css">
@@ -16,14 +17,14 @@
             <div class="col-inner">
               <form class="page_input" id="book_data" action="">
                 Number of pages: <input type="number" id="num_pages_input" name="fnumber" min="1">
-                <input class = "button" type="button" name="fsubmit_page_num"  onclick="getNumberOfPages()" value="Submit">
+                <input class = "button" type="button" name="fsubmit_page_num" onclick="getNumberOfPages()" value="Submit">
               </form>
             </div>
 
             <div class="col-inner">
               <form class="book_search" id="get_book" action="">
-                Book Name: <input type="text" id="book_name_input" name="fname">
-                <input class = "button" type="button" name="fsubmit_name"  onclick="" value="Submit">
+                Book ISBN: <input type="text" id="book_ISBN_input" name="fname">
+                <input class = "button" type="button" name="fsubmit_ISBN" onclick="getBookPageCountByISBN()" value="Submit">
               </form>
             </div>
 
@@ -57,15 +58,16 @@
     </div>
 
 
-      <script>
+    <script>
         var bookThickness;
         var pixelDensity;
+        var numberOfPages;
         //credit-card width in mm
         const creditCardWidth = 53.98;
 
   
         function getNumberOfPages(){
-            var numberOfPages = parseInt(document.getElementById("num_pages_input").value);
+            numberOfPages = parseInt(document.getElementById("num_pages_input").value);
 
             //ensure that a string or too small numbers don't pass through
             if(Number.isInteger(numberOfPages) && numberOfPages > 0){
@@ -77,9 +79,24 @@
             else{
               alert("Please enter a number greater than 0.");
             }
-
         }
         
+        //get the page count for the book based on the input ISBN
+        async function getBookPageCountByISBN(){
+          var bookISBN = document.getElementById("book_ISBN_input").value;
+
+          //query the OpenLibrary API by ISBN
+          const result = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${bookISBN}&jscmd=details&format=json`);
+          //create a JSON object
+          const jsonData = await result.json();
+
+          //access the page number attribute
+          numberOfPages = jsonData[`ISBN:${bookISBN}`].details.number_of_pages;
+          bookThickness = (numberOfPages * 0.1) / 2;
+          setThicknessIndicator();
+        }
+
+
         //Update the size of the thickness indicator
         function setThicknessIndicator(){
             document.getElementById("thickness-indicator-image").width = bookThickness * pixelDensity;
@@ -106,3 +123,4 @@
         }
     </script>
   </body>
+</html>
