@@ -15,7 +15,7 @@
             <!-- Split the central container in half -->
             <div class="col-inner">
               <form class="page_input" id="book_data" action="">
-                Number of pages: <input type="number" id="num_pages_input" name="fnumber">
+                Number of pages: <input type="number" id="num_pages_input" name="fnumber" min="1">
                 <input class = "button" type="button" name="fsubmit_page_num"  onclick="getNumberOfPages()" value="Submit">
               </form>
             </div>
@@ -65,15 +65,22 @@
 
   
         function getNumberOfPages(){
-            var numberOfPages = document.getElementById("num_pages_input").value;
-            bookThickness = (numberOfPages * 0.1) / 2;
-            document.getElementById("thickness_para").innerHTML = `Thickness (Roughly): ${bookThickness}mm`; //paper thickness = 0.1mm
-            document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
+            var numberOfPages = parseInt(document.getElementById("num_pages_input").value);
 
-            setThicknessIndicator();
+            //ensure that a string or too small numbers don't pass through
+            if(Number.isInteger(numberOfPages) && numberOfPages > 0){
+              bookThickness = (numberOfPages * 0.1) / 2;
+              document.getElementById("thickness_para").innerHTML = `Thickness (Roughly): ${bookThickness}mm`; //paper thickness = 0.1mm
+              document.getElementById("thickness_explained_para").innerHTML = "Thickness is derived from the average thickness of paper being 0.1mm.";
+              setThicknessIndicator();
+            }
+            else{
+              alert("Please enter a number greater than 0.");
+            }
+
         }
         
-        //Upadte the size of the thickness indicator
+        //Update the size of the thickness indicator
         function setThicknessIndicator(){
             document.getElementById("thickness-indicator-image").width = bookThickness * pixelDensity;
             document.getElementById("thickness_explained_para").innerHTML = "Indicator Updated";
@@ -81,7 +88,7 @@
 
         }
 
-        //Reduce the credit-card temp;ate size
+        //Reduce the credit-card template size
         function increaseTemplateSize(){
             document.getElementById("resize-card-image").width += 1
             calculatePixelDensity();
