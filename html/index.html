@@ -24,7 +24,7 @@
             <div class="col-inner">
               <form class="book_search" id="get_book" action="">
                 Book ISBN: <input type="text" id="book_ISBN_input" name="fname">
-                <input class = "button" type="button" name="fsubmit_ISBN" onclick="getBookPageCountByISBN()" value="Submit">
+                <input class = "button" type="button" name="fsubmit_ISBN" onclick="getBookByISBN()" value="Submit">
               </form>
             </div>
 
@@ -59,13 +59,15 @@
 
 
     <script>
+        // require('dotenv').config();
         var bookThickness;
         var pixelDensity;
         var numberOfPages;
         //credit-card width in mm
         const creditCardWidth = 53.98;
+        // const API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
+        const API_KEY = "AIzaSyAJmfB-yxye_E0QTVfJ-DZO1NoWRkx_XEc";
 
-  
         function getNumberOfPages(){
             numberOfPages = parseInt(document.getElementById("num_pages_input").value);
 
@@ -82,24 +84,32 @@
         }
         
         //get the page count for the book based on the input ISBN
-        async function getBookPageCountByISBN(){
+        async function getBookByISBN(){
           var bookISBN = document.getElementById("book_ISBN_input").value;
 
           //query the OpenLibrary API by ISBN
-          const result = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${bookISBN}&jscmd=details&format=json`);
+          const result = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${bookISBN}&key=${API_KEY}`);
           //create a JSON object
           const jsonData = await result.json();
-
-          //access the page number attribute
-          numberOfPages = jsonData[`ISBN:${bookISBN}`].details.number_of_pages;
-          bookThickness = (numberOfPages * 0.1) / 2;
-          setThicknessIndicator();
+          console.log(jsonData);
+          //get more attributes for the book which was found to have the given ISBN
+          getMoreInformationForSpecificBook(jsonData.items[0].selfLink);
         }
 
+        async function getMoreInformationForSpecificBook(linkToMoreInfo){
+          const result = await fetch(linkToMoreInfo);
+          const jsonData = await result.json();
+          console.log(jsonData);
 
+          // alert(jsonData.volumeInfo.dimensions.thickness);
+          var bookThicknessString = jsonData.volumeInfo.dimensions.thickness;
+          //remove the units and space from the thickness value
+          bookThickness = bookThicknessString.slice(0, bookThicknessString.length - 3);
+          setThicknessIndicator();
+        }
         //Update the size of the thickness indicator
         function setThicknessIndicator(){
-            document.getElementById("thickness-indicator-image").width = bookThickness * pixelDensity;
+            document.getElementById("thickness-indicator-image").width = bookThickness * 10 * pixelDensity;
             document.getElementById("thickness_explained_para").innerHTML = "Indicator Updated";
             console.log(`indicator width: ${document.getElementById("thickness-indicator-image").width}`);
 
